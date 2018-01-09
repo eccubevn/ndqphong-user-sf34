@@ -4,3 +4,4 @@ framework:
   secret: %framework.secret%
   router:
     resource: %router.resource%
+  assets: ~
