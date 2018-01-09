@@ -1,10 +1,12 @@
 <?php
 
 define('DS', DIRECTORY_SEPARATOR);
-define('BP', __DIR__ . DS . '..' . DS);
-define('VENDOR_PATH', BP . DS . 'vendor' . DS);
-define('CONFIG_PATH', BP . DS . 'config'. DS);
-define('VAR_PATH', BP . DS . 'var' . DS);
+define('PUBLIC_DIR', __DIR__);
+define('PROJECT_DIR', str_replace(DS . 'public', '', PUBLIC_DIR) . DS);
+define('VENDOR_PATH', PROJECT_DIR . 'vendor' . DS);
+define('CONFIG_PATH', PROJECT_DIR . 'config'. DS);
+define('VAR_PATH', PROJECT_DIR . 'var' . DS);
+define('SRC_PATH', PROJECT_DIR . 'src' . DS);
 
 require_once VENDOR_PATH . 'autoload.php';
 

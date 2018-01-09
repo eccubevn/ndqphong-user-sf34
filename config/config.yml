@@ -5,3 +5,10 @@ framework:
   router:
     resource: %router.resource%
   assets: ~
+
+services:
+  Eccube\Core\Routing\CoreLoader:
+    tags: ['routing.loader']
+    arguments:
+      - "@service_container"
+      - "@routing.loader.yml"

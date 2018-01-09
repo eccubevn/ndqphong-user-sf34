@@ -13,7 +13,9 @@ class AccountController
      */
     public function login()
     {
-        return [];
+        return [
+            'title' => 'Login'
+        ];
     }
 
     /**
@@ -23,6 +25,8 @@ class AccountController
      */
     public function register()
     {
-        return [];
+        return [
+            'title' => 'Register'
+        ];
     }
 }
