@@ -29,4 +29,23 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
         $loader->load(CONFIG_PATH . 'config.yml');
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @return string
+     */
+    public function getCacheDir()
+    {
+        return VAR_PATH . 'cache' . DS . $this->getEnvironment();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return string
+     */
+    public function getLogDir()
+    {
+        return VAR_PATH . 'logs' . DS . $this->getEnvironment();
+    }
 }
