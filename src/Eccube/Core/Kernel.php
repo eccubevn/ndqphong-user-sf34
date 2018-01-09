@@ -14,6 +14,7 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new \Eccube\Core\CoreBundle(),
             new \Eccube\User\UserBundle(),
         ];
     }
