@@ -11,7 +11,8 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
     public function registerBundles()
     {
         return [
-            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle()
+            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new \Eccube\User\UserBundle(),
         ];
     }
 
