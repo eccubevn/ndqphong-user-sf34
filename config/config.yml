@@ -5,6 +5,7 @@ framework:
   router:
     resource: %router.resource%
   assets: ~
+  form: ~
 
 services:
   Eccube\Core\Routing\CoreLoader:

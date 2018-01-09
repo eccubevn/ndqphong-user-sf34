@@ -4,7 +4,7 @@ namespace Eccube\User\Controller;
 use \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class AccountController
+class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Controller
 {
     /**
      * @Route("/account/login")
@@ -13,8 +13,11 @@ class AccountController
      */
     public function login()
     {
+        $form = $this->createForm(\Eccube\User\Form\LoginType::class);
+
         return [
-            'title' => 'Login'
+            'title' => 'Login',
+            'form' => $form->createView()
         ];
     }
 
@@ -25,8 +28,11 @@ class AccountController
      */
     public function register()
     {
+        $form = $this->createForm(\Eccube\User\Form\RegisterType::class);
+
         return [
-            'title' => 'Register'
+            'title' => 'Register',
+            'form' => $form->createView()
         ];
     }
 }

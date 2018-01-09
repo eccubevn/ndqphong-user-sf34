@@ -1,4 +1,16 @@
 {% extends "@Core/1-column-layout.html.twig" %}
 {% block body %}
-    Login action on twig
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Login</h1>
+
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a href="{{ path('eccube_core_index_index') }}" class="btn btn-primary"> Home </a>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
