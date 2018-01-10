@@ -4,8 +4,15 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <a href="{{ path('eccube_user_account_login') }}">Login</a> |
-                <a href="{{ path('eccube_user_account_register') }}">Register</a>
+                {% for msg in app.session.flashBag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
+                <div>
+                    <a href="{{ path('eccube_user_account_login') }}">Login</a> |
+                    <a href="{{ path('eccube_user_account_register') }}">Register</a>
+                </div>
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function register(\Symfony\Component\HttpFoundation\Request $request)
     {
@@ -41,6 +41,9 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $this->addFlash('success', 'Register successfully!');
+            return $this->redirectToRoute('eccube_core_index_index');
         }
 
         return [
