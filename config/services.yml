@@ -9,3 +9,4 @@ services:
     arguments:
       - "@security.password_encoder"
       - "@request_stack"
+      - "@security.authentication_utils"

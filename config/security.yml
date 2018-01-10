@@ -1,11 +1,19 @@
 security:
   providers:
-    in_memory:
-      memory: ~
+    db_provider:
+      entity:
+        class: Eccube\User\Entity\User
+        property: username
 
   firewalls:
     main:
       anonymous: ~
+      provider: db_provider
+      form_login:
+        login_path: eccube_user_account_login
+        check_path: eccube_user_account_login
+        username_parameter: login[username]
+        password_parameter: login[password]
 
   encoders:
     Eccube\User\Entity\User: sha512

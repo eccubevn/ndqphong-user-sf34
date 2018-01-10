@@ -17,17 +17,25 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
     protected $requestStack;
 
     /**
+     * @var \Symfony\Component\Security\Http\Authentication\AuthenticationUtils
+     */
+    protected $authUtils;
+
+    /**
      * AccountController constructor.
      *
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authUtils
      */
     public function __construct(
         \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder,
-        \Symfony\Component\HttpFoundation\RequestStack $requestStack
+        \Symfony\Component\HttpFoundation\RequestStack $requestStack,
+        \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authUtils
     ) {
         $this->passwordEncoder = $userPasswordEncoder;
         $this->requestStack = $requestStack;
+        $this->authUtils = $authUtils;
     }
 
     /**
@@ -38,10 +46,12 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
     public function login()
     {
         $form = $this->createForm(\Eccube\User\Form\LoginType::class);
+        $error = $this->authUtils->getLastAuthenticationError();
 
         return [
             'title' => 'Login',
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' => $error
         ];
     }
 
