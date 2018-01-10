@@ -7,6 +7,30 @@ use \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Controller
 {
     /**
+     * @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
+     */
+    protected $passwordEncoder;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\RequestStack
+     */
+    protected $requestStack;
+
+    /**
+     * AccountController constructor.
+     *
+     * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     */
+    public function __construct(
+        \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder,
+        \Symfony\Component\HttpFoundation\RequestStack $requestStack
+    ) {
+        $this->passwordEncoder = $userPasswordEncoder;
+        $this->requestStack = $requestStack;
+    }
+
+    /**
      * @Route("/account/login")
      *
      * @Template("@User/account/login.html.twig")
@@ -26,17 +50,17 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
      *
      * @Template("@User/account/register.html.twig")
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function register(\Symfony\Component\HttpFoundation\Request $request)
-    {
+    public function register() {
         $form = $this->createForm(\Eccube\User\Form\RegisterType::class);
 
-        $form->handleRequest($request);
+        $form->handleRequest($this->requestStack->getCurrentRequest());
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+
+            $password = $this->passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

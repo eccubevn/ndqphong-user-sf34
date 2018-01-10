@@ -1,0 +1,11 @@
+services:
+  Eccube\Core\Routing\CoreLoader:
+    tags: ['routing.loader']
+    arguments:
+      - "@service_container"
+      - "@routing.loader.yml"
+
+  Eccube\User\Controller\AccountController:
+    arguments:
+      - "@security.password_encoder"
+      - "@request_stack"

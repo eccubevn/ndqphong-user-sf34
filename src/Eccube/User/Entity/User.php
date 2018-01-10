@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Eccube\User\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
-class User
+class User implements \Symfony\Component\Security\Core\User\UserInterface
 {
     /**
      * @ORM\Id
@@ -25,6 +25,11 @@ class User
      * @ORM\Column(type="string")
      */
     protected $password;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $salt;
 
     /**
      * @return string
@@ -58,5 +63,39 @@ class User
         $this->password = $password;
     }
 
+    /**
+     * @return string
+     */
+    public function getSalt()
+    {
+        if (!$this->id) {
+            $this->setSalt(md5(time() . uniqid()));
+        }
+        return $this->salt;
+    }
 
+    /**
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function eraseCredentials()
+    {
+    }
 }
