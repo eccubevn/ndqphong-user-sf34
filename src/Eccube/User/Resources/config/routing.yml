@@ -1,3 +1,5 @@
 user:
   resource: "@UserBundle/Controller"
   type: annotation
+logout:
+  path: /account/logout

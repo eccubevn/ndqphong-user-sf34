@@ -10,3 +10,4 @@ services:
       - "@security.password_encoder"
       - "@request_stack"
       - "@security.authentication_utils"
+      - "@security.token_storage"

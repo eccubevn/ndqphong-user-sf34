@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Eccube\User\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
-class User implements \Symfony\Component\Security\Core\User\UserInterface
+class User implements \Symfony\Component\Security\Core\User\UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -89,7 +89,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
      */
     public function getRoles()
     {
-        return [];
+        return ['ROLE_USER'];
     }
 
     /**
@@ -97,5 +97,23 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize([$this->id, $this->username]);
+    }
+
+    /**
+     * @param string $serialized
+     *
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        list($this->id, $this->username) = unserialize($serialized);
     }
 }

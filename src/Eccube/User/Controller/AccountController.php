@@ -22,17 +22,25 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
     protected $authUtils;
 
     /**
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage
+     */
+    protected $tokenStorage;
+
+    /**
      * AccountController constructor.
      *
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authUtils
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $tokenStorage
      */
     public function __construct(
         \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder,
         \Symfony\Component\HttpFoundation\RequestStack $requestStack,
-        \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authUtils
+        \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authUtils,
+        \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage $tokenStorage
     ) {
+        $this->tokenStorage = $tokenStorage;
         $this->passwordEncoder = $userPasswordEncoder;
         $this->requestStack = $requestStack;
         $this->authUtils = $authUtils;
@@ -62,7 +70,8 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function register() {
+    public function register()
+    {
         $form = $this->createForm(\Eccube\User\Form\RegisterType::class);
 
         $form->handleRequest($this->requestStack->getCurrentRequest());
@@ -83,6 +92,21 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
         return [
             'title' => 'Register',
             'form' => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/account/my-page")
+     *
+     * @Template("@User/account/mypage.html.twig")
+     *
+     * @return array
+     */
+    public function mypage()
+    {
+        return [
+            'title' => 'My Page',
+            'username' => $this->tokenStorage->getToken()->getUsername()
         ];
     }
 }
