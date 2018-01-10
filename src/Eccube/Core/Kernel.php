@@ -13,6 +13,7 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel
         return [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
+            new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \Eccube\Core\CoreBundle(),
             new \Eccube\User\UserBundle(),

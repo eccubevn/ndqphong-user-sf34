@@ -1,0 +1,35 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Debug\Debug;
+
+// if you don't want to setup permissions the proper way, just uncomment the following PHP line
+// read https://symfony.com/doc/current/setup.html#checking-symfony-application-configuration-and-setup
+// for more information
+//umask(0000);
+
+set_time_limit(0);
+
+define('DS', DIRECTORY_SEPARATOR);
+define('BIN_DIR', __DIR__);
+define('PROJECT_DIR', str_replace(DS . 'bin', '', BIN_DIR) . DS);
+define('VENDOR_PATH', PROJECT_DIR . 'vendor' . DS);
+define('CONFIG_PATH', PROJECT_DIR . 'config'. DS);
+define('VAR_PATH', PROJECT_DIR . 'var' . DS);
+define('SRC_PATH', PROJECT_DIR . 'src' . DS);
+
+require_once VENDOR_PATH . 'autoload.php';
+
+$input = new ArgvInput();
+$env = $input->getParameterOption(['--env', '-e'], getenv('SYMFONY_ENV') ?: 'dev');
+$debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(['--no-debug', '']) && $env !== 'prod';
+
+if ($debug) {
+    Debug::enable();
+}
+
+$kernel = new \Eccube\Core\Kernel($env, $debug);
+$application = new Application($kernel);
+$application->run($input);

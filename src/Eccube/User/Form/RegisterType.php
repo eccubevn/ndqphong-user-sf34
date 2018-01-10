@@ -22,6 +22,8 @@ class RegisterType extends \Symfony\Component\Form\AbstractType
      */
     public function configureOptions(\Symfony\Component\OptionsResolver\OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'data_class' => \Eccube\User\Entity\User::class
+        ]);
     }
 }

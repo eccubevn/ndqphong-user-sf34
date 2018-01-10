@@ -25,10 +25,23 @@ class AccountController extends \Symfony\Bundle\FrameworkBundle\Controller\Contr
      * @Route("/account/register")
      *
      * @Template("@User/account/register.html.twig")
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
      */
-    public function register()
+    public function register(\Symfony\Component\HttpFoundation\Request $request)
     {
         $form = $this->createForm(\Eccube\User\Form\RegisterType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+        }
 
         return [
             'title' => 'Register',

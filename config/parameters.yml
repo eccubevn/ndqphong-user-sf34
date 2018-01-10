@@ -1,3 +1,9 @@
 parameters:
   framework.secret: afbb04c5d22e9af95da3cc9035c230ef9a0e22e7
   router.resource: "%kernel.project_dir%/config/routing.yml"
+  database_host: mysql
+  database_port: null
+  database_name: user-sf34
+  database_user: root
+  database_password: root
+  database_charset: UTF8
